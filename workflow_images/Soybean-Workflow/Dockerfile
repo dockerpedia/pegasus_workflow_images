@@ -5,6 +5,8 @@ WORKDIR /home/workflow
 USER workflow
 
 #Install SoyKb 
+
+```
 RUN mkdir -p soykb/ && \
     mkdir -p soykb/wrappers/ && \
     wget https://github.com/rafaelfsilva/workflow-reproducibility/raw/master/components/soykb/soykb.tar.gz && \
