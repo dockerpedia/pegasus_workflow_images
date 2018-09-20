@@ -1,4 +1,4 @@
-FROM pegasus_workflow
+FROM mosorio/pegasus_workflow_images:base
 USER root
 RUN apt-get install zlib1g-dev libncurses5-dev -y 
 WORKDIR /home/workflow
