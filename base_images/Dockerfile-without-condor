@@ -1,0 +1,32 @@
+FROM debian:9
+
+LABEL maintainer "Maximiliano Osorio <mosorio@inf.utfsm.cl>"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget \
+    gnupg && \
+        rm -rf /var/lib/apt/lists/*
+
+#install pegasus
+RUN     wget -O - http://download.pegasus.isi.edu/pegasus/gpg.txt | apt-key add - && \
+        echo 'deb http://download.pegasus.isi.edu/wms/download/debian stretch main' > \
+        /etc/apt/sources.list.d/pegasus.list && \
+        apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends pegasus && \
+        rm -rf /var/lib/apt/lists/* && \
+        chmod o+rw /opt/
+
+ENV WORKFLOW_USER workflow
+ENV GID 1000
+ENV UID 1000
+ENV PASS 123456
+
+RUN groupadd -g ${GID} ${WORKFLOW_USER} && \
+    useradd -m -u ${UID} -g ${GID} ${WORKFLOW_USER} && \
+    mkdir /home/${WORKFLOW_USER}/example && \
+    rm -f /etc/localtime && \
+    ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
+
+USER root
+VOLUME ["/home/${WORKFLOW_USER}/submit"]
+WORKDIR /home/${WORKFLOW_USER}/submit
+CMD ["/usr/bin/supervisord"]
