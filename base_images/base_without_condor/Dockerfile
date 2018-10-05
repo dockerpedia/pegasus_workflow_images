@@ -27,6 +27,5 @@ RUN groupadd -g ${GID} ${WORKFLOW_USER} && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
 USER root
-VOLUME ["/home/${WORKFLOW_USER}/submit"]
-WORKDIR /home/${WORKFLOW_USER}/submit
-CMD ["/usr/bin/supervisord"]
+VOLUME ["/home/${WORKFLOW_USER}/"]
+WORKDIR /home/${WORKFLOW_USER}/
