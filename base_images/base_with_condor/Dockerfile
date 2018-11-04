@@ -47,6 +47,6 @@ RUN mkdir ~/.ssh/ && \
     echo "Host *\nStrictHostKeyChecking no\nUserKnownHostsFile=/dev/null" > ~/.ssh/config
 
 USER root
-VOLUME ["/home/${WORKFLOW_USER}/"]
+VOLUME ["/home/${WORKFLOW_USER}/out"]
 WORKDIR /home/${WORKFLOW_USER}/
 CMD ["/usr/bin/supervisord"]
