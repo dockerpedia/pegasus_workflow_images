@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     usermod -a -G condor ${WORKFLOW_USER} && \
     echo "root:${PASS}" | chpasswd  && \
     mkdir /home/${WORKFLOW_USER}/example && \
-    mkdir /run/sshd/ /run/condor && \
+    mkdir -p /run/sshd/ /run/condor && \
     chown condor:condor /run/condor && \
     rm -f /etc/localtime && \
     ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime && \
