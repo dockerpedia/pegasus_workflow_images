@@ -2,6 +2,18 @@ FROM debian:9
 
 LABEL maintainer "Maximiliano Osorio <mosorio@inf.utfsm.cl>"
 
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Pegasus is a WMS able to manage workflows comprised of mil- lions of tasks, recording data about the execution and intermediate results. This image installs and uses Condor as the scheduler." \
+      org.label-schema.description="The Montage workflow was created by the NASA Infrared Processing and Analysis Center (IPAC) as an open source toolkit that can be used to generate custom mosaics of astronomical images in the Flexible Image Transport System (FITS) format" \
+      org.label-schema.url="http://montage.ipac.caltech.edu/" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/dockerpedia/montage" \
+      org.label-schema.vendor="DockerPedia" \
+      org.label-schema.version="1.0" \
+      org.label-schema.schema-version="1.0"
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
         gnupg
@@ -17,7 +29,6 @@ RUN wget -O - http://download.pegasus.isi.edu/pegasus/gpg.txt | apt-key add - &&
 ENV WORKFLOW_USER workflow
 ENV GID 1000
 ENV UID 1000
-ENV PASS 123456
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         openssh-server \
@@ -25,7 +36,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     groupadd -g ${GID} ${WORKFLOW_USER} && \
     useradd -m -u ${UID} -g ${GID} ${WORKFLOW_USER} && \
     usermod -a -G condor ${WORKFLOW_USER} && \
-    echo "root:${PASS}" | chpasswd  && \
     mkdir /home/${WORKFLOW_USER}/example && \
     mkdir /run/sshd/ /run/condor && \
     chown condor:condor /run/condor && \
