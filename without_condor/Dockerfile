@@ -1,6 +1,20 @@
 FROM debian:9
 
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Pegasus" \
+      org.label-schema.description="Pegasus is a WMS able to manage workflows comprised of mil- lions of tasks, recording data about the execution and intermediate results. This image installs and uses Condor as the scheduler." \
+      org.label-schema.url="https://pegasus.isi.edu/" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/dockerpedia/pegasus_workflow_images" \
+      org.label-schema.vendor="DockerPedia" \
+      org.label-schema.version="1.0" \
+      org.label-schema.schema-version="1.0"
+
 LABEL maintainer "Maximiliano Osorio <mosorio@inf.utfsm.cl>"
+
+
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         wget \
